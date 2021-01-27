@@ -5,8 +5,30 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [movies, setMovies] = useState(null);
 
+  // Comment this chunk for Cache Storage API demo
+  // useEffect(() => {
+  //   async function fetchNoCache() {
+  //       const url = "https://api.themoviedb.org/4/list/1";
+  //       try {
+  //         const responseFromAPI = await fetch(url, {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json;charset=utf-8",
+  //             Authorization: "Bearer " + process.env.NEXT_PUBLIC_TMDB_API_TOKEN,
+  //           },
+  //         });
+  //         const dataFromAPI = await responseFromAPI.json();
+  //         setMovies(dataFromAPI.results);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //   }
+  //   fetchNoCache();
+  // }, []);
+
+  // Uncomment this chunk for Cache Storage API demo
   useEffect(() => {
-    async function fetchFromMovieDB() {
+    async function fetchWithCache() {
       // Since next js works on server side, need to check if cache is available in window
       if ("caches" in window) {
         // Open cache or create new one if not exists
@@ -29,14 +51,10 @@ export default function Home() {
           // Set list of movies for rendering
           setMovies(dataFromAPI.results);
 
-          /**
-           * Get fresh list of movies from API
-           *
-           * Here, cache resolves the fetch promise if status code of response is in 200 range
-           *   or rejects the promise if not in 200 range
-           * Additionally, cache.put will also overwrite previous responses of the same request
-           *
-           */
+          // Get fresh list of movies from API
+          // Here, cache resolves the fetch promise if status code of response is in 200 range
+          // or rejects the promise if not in 200 range
+          // Additionally, cache.put will also overwrite previous responses of the same request
           console.log("Create an entry in Cache Storage");
           cache.put(url, responseFromAPI);
         } catch (error) {
@@ -49,11 +67,9 @@ export default function Home() {
           // Retrieve response from cache
           const responseFromCache = await cache.match(url);
 
-          /**
-           * If no match is found, it resolves to undefined
-           * Due to async nature, even if fetch from API is successful, by the time we
-           *   reach here cache might not be populated yet so match would fail
-           */
+          // If no match is found, it resolves to undefined
+          // Due to async nature, even if fetch from API is successful, by the time we
+          // reach here cache might not be populated yet so match would fail
           if (responseFromCache === undefined)
             console.log("Uh, no match is found in cache for " + url);
           else {
@@ -66,7 +82,7 @@ export default function Home() {
         }
       }
     }
-    fetchFromMovieDB();
+    fetchWithCache();
   }, []);
 
   return (
