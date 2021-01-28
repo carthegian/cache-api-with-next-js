@@ -1,8 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+# cache-api-with-next-js
+This is a simple Next.Js project to demonstrate usage of Cache Storage API for data fetching using The Movie Database API
 ## Getting Started
 
-First, run the development server:
+(1) First, install packages via npm
+
+```bash
+npm install
+# or
+yarn install
+```
+
+(2) You need The Movie Database API token. To get one, register here:
+[The Movie Database API registration page](https://developers.themoviedb.org/3/getting-started/introduction)
+After registration, copy `API Read Access Token (v4 auth)`
+
+(3) Create new env file `.env.local` at the root of application and paste the following text:
+
+```
+NEXT_PUBLIC_TMDB_API_TOKEN=<API token from no 3>
+```
+
+(4) Run the development server:
 
 ```bash
 npm run dev
@@ -10,13 +28,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+(5) Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Learn More
 
