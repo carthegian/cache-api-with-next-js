@@ -9,7 +9,7 @@ export default function Home() {
   // Define API url to fetch data from
   const url = "https://restcountries.eu/rest/v2/region/europe?fields=name";
 
-  // Comment this chunk for Cache Storage API demo
+  // Comment out this chunk for Cache Storage API demo
   useEffect(() => {
     async function fetchNoCache() {
         try {
